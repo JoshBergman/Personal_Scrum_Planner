@@ -1,0 +1,5 @@
+.App {
+  height: fit-content;
+  min-height: 100vh;
+  background-color: rgb(236, 243, 255);
+}
