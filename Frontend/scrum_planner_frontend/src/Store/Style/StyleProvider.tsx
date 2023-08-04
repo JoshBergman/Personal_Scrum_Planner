@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleContext, IStyleContext } from "./StyleContext";
+import { StyleContext } from "./StyleContext";
 
 interface IProviderProps {
   children: React.ReactNode;
