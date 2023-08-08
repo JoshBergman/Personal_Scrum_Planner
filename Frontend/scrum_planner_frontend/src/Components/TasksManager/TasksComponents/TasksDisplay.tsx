@@ -8,12 +8,11 @@ const TasksDisplay = () => {
   const getTasks = () => {
     const renderToTaskBacklog: React.ReactNode[] = [];
     tasks.forEach((task) => {
-      if (task.isScheduled === false) {
+      if (!task.schedule.isScheduled) {
         renderToTaskBacklog.push(
           <TaskDiv
             taskName={task.taskName}
-            taskLengthInHours={0}
-            isScheduled={""}
+            schedule={task.schedule}
             key={task.taskName}
           />
         );

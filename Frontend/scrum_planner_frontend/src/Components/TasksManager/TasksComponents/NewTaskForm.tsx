@@ -20,10 +20,16 @@ const NewTaskForm = ({ toggleMakingTask }: INewTaskFormProps) => {
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     const newTask: ITask = {
-      taskName: "asdf",
-      taskLengthInHours: 0,
-      isScheduled: false,
+      taskName: title,
+      schedule: {
+        isScheduled: false,
+        date: "placeholder@newform.tsx FIX ME",
+        time: "placeholder@newform.tsx FIX ME",
+        taskLengthInHours: duration,
+      },
     };
+
+    // add input validity checks before adding tasks
     taskActions.addTask(newTask);
 
     toggleMakingTask();

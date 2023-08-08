@@ -1,8 +1,0 @@
-.calendarContainer {
-  background-color: rgb(195, 195, 195);
-
-  width: 200px;
-  height: 600px;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-}

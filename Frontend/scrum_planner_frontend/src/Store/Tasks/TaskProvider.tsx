@@ -5,35 +5,54 @@ import { TaskContext, ITask, ITaskContext } from "./TaskContext";
 interface IProviderProps {
   children: React.ReactNode;
 }
-const defaultAndTestingTasks = [
+const defaultAndTestingTasks: ITask[] = [
   {
     taskName: "Test",
-    taskLengthInHours: 4,
-    isScheduled: false,
+    schedule: {
+      isScheduled: false,
+      date: "n/a",
+      time: "n/a",
+      taskLengthInHours: 4,
+    },
   },
   {
     taskName: "DummyTask1UnSche",
-    taskLengthInHours: 3,
-    isScheduled: false,
+    schedule: {
+      isScheduled: false,
+      date: "n/a",
+      time: "n/a",
+      taskLengthInHours: 3,
+    },
   },
   {
     taskName: "DummyTask1Scheduled",
-    taskLengthInHours: 3,
-    isScheduled: "08/04/2023",
+    schedule: {
+      isScheduled: true,
+      date: "08/08/2023",
+      time: "2 PM",
+      taskLengthInHours: 3,
+    },
   },
 ];
 
 export const TaskContextProvider = ({ children }: IProviderProps) => {
   const [tasks, setTasks] = useState<ITask[]>(defaultAndTestingTasks);
+  const [dragging, setDragging] = useState<boolean | string>(false);
 
   const addTask = (newTask: ITask) => {
     setTasks(tasks.concat(newTask));
   };
 
+  const updateDragging = (newDraggingState: boolean | string) => {
+    setDragging(newDraggingState);
+  };
+
   const taskContextFinal: ITaskContext = {
     actions: {
-      addTask: addTask,
+      addTask,
+      updateDragging,
     },
+    dragging: dragging,
     tasks,
   };
 
