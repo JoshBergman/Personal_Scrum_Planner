@@ -43,6 +43,29 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     setTasks(tasks.concat(newTask));
   };
 
+  const setTaskSchedule = (
+    taskName: string,
+    newSchedule: ITask["schedule"]
+  ) => {
+    const tasksCopy = tasks.concat([]);
+    const modifyIndex: number = tasksCopy.findIndex(
+      (task) => task.taskName === taskName
+    );
+    if (modifyIndex < 0) {
+      return;
+    }
+
+    //update information to task
+    const newTaskValue = tasksCopy[modifyIndex];
+    newTaskValue.schedule = {
+      ...newSchedule,
+    };
+
+    //apply new task to tasks
+    tasksCopy[modifyIndex] = newTaskValue;
+    setTasks(tasksCopy);
+  };
+
   const updateDragging = (newDraggingState: boolean | string) => {
     setDragging(newDraggingState);
   };
@@ -51,6 +74,7 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     actions: {
       addTask,
       updateDragging,
+      setTaskSchedule,
     },
     dragging: dragging,
     tasks,

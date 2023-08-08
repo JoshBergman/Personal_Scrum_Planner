@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
-import { TaskContext } from "../../../Store/Tasks/TaskContext";
+import { ITask, TaskContext } from "../../../Store/Tasks/TaskContext";
 
 interface IHourBlockProps {
   time: string;
@@ -22,7 +22,20 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
   const dropHandler = (event: React.DragEvent) => {
     event.preventDefault();
     console.log("Dropped!");
+    const currDragItem: string =
+      typeof taskCTX.dragging === "string" ? taskCTX.dragging : "Error";
+    const thisTask = taskCTX.tasks.filter(
+      (task) => task.taskName === currDragItem
+    );
+    const scheduleInfo = thisTask[0].schedule;
+    const newSchedule: ITask["schedule"] = {
+      isScheduled: true,
+      time: time,
+      date: "08/08/2023",
+      taskLengthInHours: scheduleInfo.taskLengthInHours,
+    };
 
+    taskCTX.actions.setTaskSchedule(currDragItem, newSchedule);
     taskCTX.actions.updateDragging(false);
   };
 
