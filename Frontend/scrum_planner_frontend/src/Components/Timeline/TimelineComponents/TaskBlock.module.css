@@ -1,0 +1,6 @@
+.taskBlock {
+  position: absolute;
+
+  background-color: rgba(249, 15, 89, 0.604);
+  width: 100px;
+}

@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
 import { ITask, TaskContext } from "../../../Store/Tasks/TaskContext";
+import TaskBlock from "./TaskBlock";
 
 interface IHourBlockProps {
   time: string;
@@ -67,6 +68,9 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
       onDrop={dropHandler}
       className={styles.hourBlock}
     >
+      {scheduledStatus.includes("head") && (
+        <TaskBlock durationInHours={scheduledStatus.slice(5)} />
+      )}
       {time}
     </div>
   );
