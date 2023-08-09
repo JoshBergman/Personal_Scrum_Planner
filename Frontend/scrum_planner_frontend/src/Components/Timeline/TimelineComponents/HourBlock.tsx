@@ -11,8 +11,16 @@ interface IHourBlockProps {
 const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
   const taskCTX = useContext(TaskContext);
 
-  const dragEnterHandler = () => {
+  const dragEnterHandler = (event: React.DragEvent) => {
+    event.preventDefault();
     console.log("Drag Entered! - " + time + ": " + taskCTX.dragging);
+    //Dont allow dropping on scheduled item
+    //TODO figure out how to update the drag and drop cursor to represent when you cannot drop
+    if (scheduledStatus !== "free") {
+      event.dataTransfer.dropEffect = "none";
+    } else {
+      event.dataTransfer.dropEffect = "move";
+    }
   };
 
   const dragLeaveHandler = () => {
@@ -21,7 +29,13 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
 
   const dropHandler = (event: React.DragEvent) => {
     event.preventDefault();
+
+    //Dont allow dropping on scheduled item
+    if (scheduledStatus !== "free") {
+      return;
+    }
     console.log("Dropped!");
+
     const currDragItem: string =
       typeof taskCTX.dragging === "string" ? taskCTX.dragging : "Error";
     const thisTask = taskCTX.tasks.filter(

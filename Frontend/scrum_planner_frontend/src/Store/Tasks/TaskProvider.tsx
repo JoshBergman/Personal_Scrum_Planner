@@ -25,11 +25,20 @@ const defaultAndTestingTasks: ITask[] = [
     },
   },
   {
+    taskName: "20 Hours",
+    schedule: {
+      isScheduled: false,
+      date: "n/a",
+      time: "n/a",
+      taskLengthInHours: 20,
+    },
+  },
+  {
     taskName: "DummyTask1Scheduled",
     schedule: {
-      isScheduled: true,
-      date: "08/08/2023",
-      time: "2 PM",
+      isScheduled: false,
+      date: "n/a",
+      time: "n/a",
       taskLengthInHours: 3,
     },
   },
