@@ -1,9 +1,13 @@
 import { useContext } from "react";
 
 import styles from "./TaskDiv.module.css";
-import { ITask, TaskContext } from "../../../Store/Tasks/TaskContext";
+import { TaskContext } from "../../../Store/Tasks/TaskContext";
 
-const TaskDiv = ({ taskName }: ITask) => {
+interface ITaskDivProps {
+  taskName: string;
+}
+
+const TaskDiv = ({ taskName }: ITaskDivProps) => {
   const taskCTX = useContext(TaskContext);
 
   const onDragStartHandler = (event: React.DragEvent) => {

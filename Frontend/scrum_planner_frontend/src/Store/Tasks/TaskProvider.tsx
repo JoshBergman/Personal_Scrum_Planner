@@ -1,13 +1,18 @@
 import { useState } from "react";
 
-import { TaskContext, ITask, ITaskContext } from "./TaskContext";
+import {
+  TaskContext,
+  ITask,
+  ITaskContext,
+  ISchedule,
+  ITaskSchedule,
+} from "./TaskContext";
 
 interface IProviderProps {
   children: React.ReactNode;
 }
-const defaultAndTestingTasks: ITask[] = [
-  {
-    taskName: "Test",
+const defaultAndTestingTasks: ITask = {
+  Test: {
     schedule: {
       isScheduled: false,
       date: "n/a",
@@ -15,8 +20,7 @@ const defaultAndTestingTasks: ITask[] = [
       taskLengthInHours: 4,
     },
   },
-  {
-    taskName: "DummyTask1UnSche",
+  DummyTask1UnSche: {
     schedule: {
       isScheduled: false,
       date: "n/a",
@@ -24,8 +28,7 @@ const defaultAndTestingTasks: ITask[] = [
       taskLengthInHours: 3,
     },
   },
-  {
-    taskName: "20 Hours",
+  "20 Hours": {
     schedule: {
       isScheduled: false,
       date: "n/a",
@@ -33,8 +36,7 @@ const defaultAndTestingTasks: ITask[] = [
       taskLengthInHours: 20,
     },
   },
-  {
-    taskName: "DummyTask1Scheduled",
+  DummyTask1Scheduled: {
     schedule: {
       isScheduled: false,
       date: "n/a",
@@ -42,36 +44,40 @@ const defaultAndTestingTasks: ITask[] = [
       taskLengthInHours: 3,
     },
   },
-];
+};
+
+const defaultSchedule: ISchedule = {
+  "08/04/2023": {
+    "6 PM": ["DummyTask1Scheduled", 3],
+  },
+};
 
 export const TaskContextProvider = ({ children }: IProviderProps) => {
-  const [tasks, setTasks] = useState<ITask[]>(defaultAndTestingTasks);
+  const [schedule, setSchedule] = useState<ISchedule>(defaultSchedule);
+  const [tasks, setTasks] = useState<ITask>(defaultAndTestingTasks);
   const [dragging, setDragging] = useState<boolean | string>(false);
 
-  const addTask = (newTask: ITask) => {
-    setTasks(tasks.concat(newTask));
+  const addTask = (newTaskName: string, newTask: ITaskSchedule) => {
+    const tasksCopy = { ...tasks };
+    tasksCopy[newTaskName] = newTask;
+    setTasks(tasksCopy);
   };
 
-  const setTaskSchedule = (
+  const addTaskToSchedule = (
     taskName: string,
     newSchedule: ITask["schedule"]
   ) => {
-    const tasksCopy = tasks.concat([]);
-    const modifyIndex: number = tasksCopy.findIndex(
-      (task) => task.taskName === taskName
-    );
-    if (modifyIndex < 0) {
-      return;
-    }
+    const scheduleCopy = { ...schedule };
+    const tasksCopy = { ...tasks };
 
-    //update information to task
-    const newTaskValue = tasksCopy[modifyIndex];
-    newTaskValue.schedule = {
-      ...newSchedule,
-    };
+    const date = newSchedule.schedule.date;
+    const hour = newSchedule.schedule.time;
+    const taskDuration = newSchedule.schedule.taskLengthInHours;
 
-    //apply new task to tasks
-    tasksCopy[modifyIndex] = newTaskValue;
+    scheduleCopy[date][hour] = [taskName, taskDuration];
+    setSchedule(scheduleCopy);
+
+    tasksCopy[taskName].schedule = newSchedule.schedule;
     setTasks(tasksCopy);
   };
 
@@ -83,10 +89,11 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     actions: {
       addTask,
       updateDragging,
-      setTaskSchedule,
+      addTaskToSchedule,
     },
     dragging: dragging,
     tasks,
+    schedule,
   };
 
   return (

@@ -17,26 +17,7 @@ const TasksManager = () => {
   };
 
   //drop handler for when moving tasks from the schedule => back to the product backlog
-  const dropHandler = (event: React.DragEvent) => {
-    event.preventDefault();
-    console.log("Dropped!");
-
-    const currDragItem: string =
-      typeof taskCTX.dragging === "string" ? taskCTX.dragging : "Error";
-    const thisTask = taskCTX.tasks.filter(
-      (task) => task.taskName === currDragItem
-    );
-    const scheduleInfo = thisTask[0].schedule;
-    const newSchedule: ITask["schedule"] = {
-      isScheduled: false,
-      time: "n/a",
-      date: "n/a",
-      taskLengthInHours: scheduleInfo.taskLengthInHours,
-    };
-
-    taskCTX.actions.setTaskSchedule(currDragItem, newSchedule);
-    taskCTX.actions.updateDragging(false);
-  };
+  const dropHandler = (event: React.DragEvent) => {};
 
   return (
     <section

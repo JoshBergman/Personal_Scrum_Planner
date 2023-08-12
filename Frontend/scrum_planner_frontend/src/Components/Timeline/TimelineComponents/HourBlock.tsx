@@ -1,7 +1,11 @@
 import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
-import { ITask, TaskContext } from "../../../Store/Tasks/TaskContext";
+import {
+  ITask,
+  ITaskSchedule,
+  TaskContext,
+} from "../../../Store/Tasks/TaskContext";
 import TaskBlock from "./TaskBlock";
 
 interface IHourBlockProps {
@@ -11,6 +15,7 @@ interface IHourBlockProps {
 
 const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
   const taskCTX = useContext(TaskContext);
+  let taskName = "";
 
   const dragEnterHandler = (event: React.DragEvent) => {
     event.preventDefault();
@@ -39,18 +44,20 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
 
     const currDragItem: string =
       typeof taskCTX.dragging === "string" ? taskCTX.dragging : "Error";
-    const thisTask = taskCTX.tasks.filter(
-      (task) => task.taskName === currDragItem
-    );
-    const scheduleInfo = thisTask[0].schedule;
-    const newSchedule: ITask["schedule"] = {
-      isScheduled: true,
-      time: time,
-      date: "08/08/2023",
-      taskLengthInHours: scheduleInfo.taskLengthInHours,
+    const thisTask = taskCTX.tasks[currDragItem];
+
+    taskName = currDragItem;
+    const scheduleInfo = thisTask.schedule;
+    const newSchedule: ITaskSchedule = {
+      schedule: {
+        isScheduled: true,
+        time: time,
+        date: "08/08/2023",
+        taskLengthInHours: scheduleInfo.taskLengthInHours,
+      },
     };
 
-    taskCTX.actions.setTaskSchedule(currDragItem, newSchedule);
+    taskCTX.actions.addTaskToSchedule(taskName, newSchedule);
     taskCTX.actions.updateDragging(false);
   };
 
@@ -69,7 +76,10 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
       className={styles.hourBlock}
     >
       {scheduledStatus.includes("head") && (
-        <TaskBlock durationInHours={scheduledStatus.slice(5)} />
+        <TaskBlock
+          taskName={taskName}
+          durationInHours={scheduledStatus.slice(5)}
+        />
       )}
       {time}
     </div>

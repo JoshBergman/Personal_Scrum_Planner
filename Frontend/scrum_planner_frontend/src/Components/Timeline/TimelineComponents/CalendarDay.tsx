@@ -1,14 +1,19 @@
+import { useContext } from "react";
+
 import styles from "./CalendarDay.module.css";
-import { ITask } from "../../../Store/Tasks/TaskContext";
+import { TaskContext } from "../../../Store/Tasks/TaskContext";
 import { hours } from "./Helpers/Hours";
 
 import HourBlock from "./HourBlock";
 
 interface ICalendarDayProps {
-  thisDaysTasks: [string, ITask["schedule"]][];
+  date: string;
 }
 
-const CalendarDay = ({ thisDaysTasks }: ICalendarDayProps) => {
+const CalendarDay = ({ date }: ICalendarDayProps) => {
+  const tasksCTX = useContext(TaskContext);
+  const todaysTasks = tasksCTX.schedule[date];
+
   const getTimeBlocks = () => {
     const hourBlocks = []; //holds <HourBlock/> components and is returned
     let scheduledCounter = 0;
@@ -17,19 +22,17 @@ const CalendarDay = ({ thisDaysTasks }: ICalendarDayProps) => {
     for (let i = 0; i < hours.length; i++) {
       let scheduleStatus = "free"; //indicates the status of the current hour: "free" | "head-X"(start of new task - duration of task in hours) | "scheduled" (continuous hour of started task)
       const thisHour = hours[i];
-      const tasksThisHour = thisDaysTasks.filter(
-        (task) => task[1].time === thisHour
-      );
+      const tasksThisHour = todaysTasks[thisHour];
 
       //updates the schedule status of the current hour and sets counter for duration of any tasks (scheduledCounter)
-      if (tasksThisHour.length >= 1) {
-        const taskThisHourLengthInHours = tasksThisHour[0][1].taskLengthInHours;
+      if (tasksThisHour) {
+        const taskThisHourLengthInHours = tasksThisHour[1];
         scheduleStatus = "head-" + taskThisHourLengthInHours;
 
         if (scheduledCounter > 0) {
           console.error("Overscheduled"); //Theoretically should be impossible to get this
         }
-        scheduledCounter = tasksThisHour[0][1].taskLengthInHours;
+        scheduledCounter = taskThisHourLengthInHours;
       }
 
       //mark following hours as scheduled

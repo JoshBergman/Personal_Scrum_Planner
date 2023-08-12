@@ -1,7 +1,6 @@
 import React from "react";
 
-export interface ITask {
-  taskName: string;
+export interface ITaskSchedule {
   schedule: {
     isScheduled: boolean;
     taskLengthInHours: number;
@@ -10,22 +9,36 @@ export interface ITask {
   };
 }
 
+export interface ITask {
+  [taskName: string]: ITaskSchedule;
+}
+
+export interface ISchedule {
+  [date: string]: {
+    [hour: string]: [taskName: string, taskDuration: number];
+  };
+}
 export interface ITaskContext {
   actions: {
-    addTask: (newTask: ITask) => void;
+    addTask: (newTaskName: string, newTaskSchedule: ITaskSchedule) => void;
     updateDragging: (newDragState: boolean | string) => void;
-    setTaskSchedule: (taskName: string, newSchedule: ITask["schedule"]) => void;
+    addTaskToSchedule: (
+      taskName: string,
+      newSchedule: ITask["schedule"]
+    ) => void;
   };
   dragging: boolean | string;
-  tasks: ITask[];
+  tasks: ITask;
+  schedule: ISchedule;
 }
 
 export const TaskContext = React.createContext<ITaskContext>({
   actions: {
-    addTask: (newTask: ITask) => {},
+    addTask: (newTaskName: string, newTaskSchedule: ITaskSchedule) => {},
     updateDragging: (newDragState: boolean | string) => {},
-    setTaskSchedule: (taskName: string, newSchedule: ITask["schedule"]) => {},
+    addTaskToSchedule: (taskName: string, newSchedule: ITask["schedule"]) => {},
   },
   dragging: false,
-  tasks: [],
+  tasks: {},
+  schedule: {},
 });

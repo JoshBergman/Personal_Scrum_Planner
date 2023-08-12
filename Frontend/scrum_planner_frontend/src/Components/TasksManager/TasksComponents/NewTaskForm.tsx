@@ -1,5 +1,9 @@
 import { useContext, useRef, useState } from "react";
-import { ITask, TaskContext } from "../../../Store/Tasks/TaskContext";
+import {
+  ITask,
+  ITaskSchedule,
+  TaskContext,
+} from "../../../Store/Tasks/TaskContext";
 
 interface INewTaskFormProps {
   toggleMakingTask: () => void;
@@ -19,8 +23,7 @@ const NewTaskForm = ({ toggleMakingTask }: INewTaskFormProps) => {
 
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const newTask: ITask = {
-      taskName: title,
+    const newTaskSchedule: ITaskSchedule = {
       schedule: {
         isScheduled: false,
         date: "placeholder@newform.tsx FIX ME",
@@ -30,7 +33,7 @@ const NewTaskForm = ({ toggleMakingTask }: INewTaskFormProps) => {
     };
 
     // add input validity checks before adding tasks
-    taskActions.addTask(newTask);
+    taskActions.addTask(title, newTaskSchedule);
 
     toggleMakingTask();
   };

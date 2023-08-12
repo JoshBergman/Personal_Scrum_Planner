@@ -7,14 +7,10 @@ const TasksDisplay = () => {
 
   const getTasks = () => {
     const renderToTaskBacklog: React.ReactNode[] = [];
-    tasks.forEach((task) => {
-      if (!task.schedule.isScheduled) {
+    Object.keys(tasks).forEach((taskKey) => {
+      if (!tasks[taskKey].schedule.isScheduled) {
         renderToTaskBacklog.push(
-          <TaskDiv
-            taskName={task.taskName}
-            schedule={task.schedule}
-            key={task.taskName}
-          />
+          <TaskDiv taskName={taskKey} key={taskKey + "-tasksdisplay"} />
         );
       }
     });

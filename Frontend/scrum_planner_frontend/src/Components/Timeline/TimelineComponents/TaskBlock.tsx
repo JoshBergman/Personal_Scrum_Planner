@@ -1,17 +1,19 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import styles from "./TaskBlock.module.css";
 import { TaskContext } from "../../../Store/Tasks/TaskContext";
 
 interface ITaskBlocksProps {
+  taskName: string;
   durationInHours: string;
 }
 
-const TaskBlock = ({ durationInHours }: ITaskBlocksProps) => {
+const TaskBlock = ({ durationInHours, taskName }: ITaskBlocksProps) => {
+  const [taskNameState, setTaskNameState] = useState(taskName);
   const taskCTX = useContext(TaskContext);
 
   const onDragStartHandler = (event: React.DragEvent) => {
-    taskCTX.actions.updateDragging("Test");
+    taskCTX.actions.updateDragging(taskNameState);
   };
 
   return (
