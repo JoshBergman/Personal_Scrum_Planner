@@ -1,11 +1,7 @@
 import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
-import {
-  ITask,
-  ITaskSchedule,
-  TaskContext,
-} from "../../../Store/Tasks/TaskContext";
+import { ITaskSchedule, TaskContext } from "../../../Store/Tasks/TaskContext";
 import TaskBlock from "./TaskBlock";
 
 interface IHourBlockProps {
@@ -52,7 +48,7 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
       schedule: {
         isScheduled: true,
         time: time,
-        date: "08/08/2023",
+        date: "08/04/2023",
         taskLengthInHours: scheduleInfo.taskLengthInHours,
       },
     };
@@ -77,7 +73,8 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
     >
       {scheduledStatus.includes("head") && (
         <TaskBlock
-          taskName={taskName}
+          taskDate={"08/04/2023"}
+          taskTimeStart={time}
           durationInHours={scheduledStatus.slice(5)}
         />
       )}

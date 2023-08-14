@@ -63,18 +63,21 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     setTasks(tasksCopy);
   };
 
-  const addTaskToSchedule = (
-    taskName: string,
-    newSchedule: ITask["schedule"]
-  ) => {
+  const addTaskToSchedule = (taskName: string, newSchedule: ITaskSchedule) => {
     const scheduleCopy = { ...schedule };
     const tasksCopy = { ...tasks };
 
     const date = newSchedule.schedule.date;
     const hour = newSchedule.schedule.time;
     const taskDuration = newSchedule.schedule.taskLengthInHours;
-
-    scheduleCopy[date][hour] = [taskName, taskDuration];
+    console.log(scheduleCopy);
+    if (Object.hasOwn(scheduleCopy, date)) {
+      scheduleCopy[date][hour] = [taskName, taskDuration];
+    } else {
+      scheduleCopy[date] = {};
+      scheduleCopy[date][hour] = [taskName, taskDuration];
+    }
+    console.log(scheduleCopy);
     setSchedule(scheduleCopy);
 
     tasksCopy[taskName].schedule = newSchedule.schedule;
