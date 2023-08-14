@@ -1,3 +1,4 @@
 .hourBlock {
   scroll-snap-align: center;
+  z-index: 2;
 }

@@ -18,7 +18,7 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
     console.log("Drag Entered! - " + time + ": " + taskCTX.dragging);
     //Dont allow dropping on scheduled item
     //TODO figure out how to update the drag and drop cursor to represent when you cannot drop
-    if (scheduledStatus !== "free") {
+    if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
       event.dataTransfer.dropEffect = "none";
     } else {
       event.dataTransfer.dropEffect = "move";
@@ -38,7 +38,7 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
     }
 
     //Dont allow dropping on scheduled item
-    if (scheduledStatus !== "free") {
+    if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
       return;
     }
     console.log("Dropped!");
@@ -72,7 +72,12 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
   return (
     <div
       style={{
-        backgroundColor: scheduledStatus === "free" ? "transparent" : "red",
+        backgroundColor:
+          scheduledStatus === "free"
+            ? "transparent"
+            : scheduledStatus === "scheduled"
+            ? "cyan"
+            : "red",
       }}
       onDragEnter={dragEnterHandler}
       onDragLeave={dragLeaveHandler}
