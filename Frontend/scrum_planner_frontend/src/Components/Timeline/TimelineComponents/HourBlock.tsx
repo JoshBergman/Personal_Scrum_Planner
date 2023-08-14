@@ -31,6 +31,11 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
 
   const dropHandler = (event: React.DragEvent) => {
     event.preventDefault();
+    let delPrev = false;
+    const dataTransfer = event.dataTransfer.getData("txt/plain");
+    if (dataTransfer !== "") {
+      delPrev = true;
+    }
 
     //Dont allow dropping on scheduled item
     if (scheduledStatus !== "free") {
@@ -53,6 +58,13 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
       },
     };
 
+    if (delPrev === true) {
+      const delTask = dataTransfer.split("-") as [date: string, time: string];
+      console.log(delTask);
+      if (delTask.length === 2) {
+        taskCTX.actions.addTaskToSchedule(taskName, newSchedule, delTask);
+      }
+    }
     taskCTX.actions.addTaskToSchedule(taskName, newSchedule);
     taskCTX.actions.updateDragging(false);
   };

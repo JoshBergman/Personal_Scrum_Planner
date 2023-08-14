@@ -38,9 +38,9 @@ const defaultAndTestingTasks: ITask = {
   },
   DummyTask1Scheduled: {
     schedule: {
-      isScheduled: false,
-      date: "n/a",
-      time: "n/a",
+      isScheduled: true,
+      date: "08/04/2023",
+      time: "6 PM",
       taskLengthInHours: 3,
     },
   },
@@ -63,7 +63,21 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     setTasks(tasksCopy);
   };
 
-  const addTaskToSchedule = (taskName: string, newSchedule: ITaskSchedule) => {
+  const removeTaskFromSchedule = (date: string, time: string) => {
+    const scheduleCopy = { ...schedule };
+    delete scheduleCopy[date][time];
+    setSchedule(scheduleCopy);
+    console.log("Running");
+  };
+
+  const addTaskToSchedule = (
+    taskName: string,
+    newSchedule: ITaskSchedule,
+    remPrev?: [date: string, time: string]
+  ) => {
+    if (remPrev) {
+      removeTaskFromSchedule(remPrev[0], remPrev[1]);
+    }
     const scheduleCopy = { ...schedule };
     const tasksCopy = { ...tasks };
 

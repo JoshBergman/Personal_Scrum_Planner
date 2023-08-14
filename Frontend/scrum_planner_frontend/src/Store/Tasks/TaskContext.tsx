@@ -24,7 +24,8 @@ export interface ITaskContext {
     updateDragging: (newDragState: boolean | string) => void;
     addTaskToSchedule: (
       taskName: string,
-      newSchedule: ITask["schedule"]
+      newSchedule: ITask["schedule"],
+      remPrev?: [date: string, time: string]
     ) => void;
   };
   dragging: boolean | string;
@@ -36,7 +37,11 @@ export const TaskContext = React.createContext<ITaskContext>({
   actions: {
     addTask: (newTaskName: string, newTaskSchedule: ITaskSchedule) => {},
     updateDragging: (newDragState: boolean | string) => {},
-    addTaskToSchedule: (taskName: string, newSchedule: ITask["schedule"]) => {},
+    addTaskToSchedule: (
+      taskName: string,
+      newSchedule: ITask["schedule"],
+      remPrev?: [date: string, time: string]
+    ) => {},
   },
   dragging: false,
   tasks: {},

@@ -21,6 +21,7 @@ const TaskBlock = ({
       const taskName = taskCTX.schedule[taskDate][taskTimeStart][0];
       return taskName;
     };
+    event.dataTransfer.setData("txt/plain", taskDate + "-" + taskTimeStart);
     taskCTX.actions.updateDragging(getThisTaskName());
   };
 
