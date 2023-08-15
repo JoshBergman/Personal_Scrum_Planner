@@ -20,7 +20,7 @@ export const calculateTimeAfter = (
   const newTime = new Date(targetTime.getTime() + elapsedMilliseconds);
 
   const newHours = newTime.getHours();
-  const newMinutes = newTime.getMinutes();
+  // const newMinutes = newTime.getMinutes();
   const newPeriod = newHours >= 12 ? "PM" : "AM";
   const displayHours = newHours % 12 === 0 ? 12 : newHours % 12;
 
