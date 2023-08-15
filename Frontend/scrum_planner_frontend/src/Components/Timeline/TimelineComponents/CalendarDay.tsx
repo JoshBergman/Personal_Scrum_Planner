@@ -44,6 +44,7 @@ const CalendarDay = ({ date }: ICalendarDayProps) => {
         <HourBlock
           scheduledStatus={scheduleStatus}
           time={thisHour}
+          date={date}
           key={"halfHourBlock-" + i}
         />
       );

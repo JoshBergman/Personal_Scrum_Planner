@@ -28,12 +28,12 @@ const defaultAndTestingTasks: ITask = {
       taskLengthInHours: 3,
     },
   },
-  "20 Hours": {
+  "2 Hours": {
     schedule: {
       isScheduled: false,
       date: "n/a",
       time: "n/a",
-      taskLengthInHours: 20,
+      taskLengthInHours: 2,
     },
   },
   DummyTask1Scheduled: {
@@ -67,7 +67,6 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     const scheduleCopy = { ...schedule };
     delete scheduleCopy[date][time];
     setSchedule(scheduleCopy);
-    console.log("Running");
   };
 
   const addTaskToSchedule = (
@@ -84,14 +83,12 @@ export const TaskContextProvider = ({ children }: IProviderProps) => {
     const date = newSchedule.schedule.date;
     const hour = newSchedule.schedule.time;
     const taskDuration = newSchedule.schedule.taskLengthInHours;
-    console.log(scheduleCopy);
     if (Object.hasOwn(scheduleCopy, date)) {
       scheduleCopy[date][hour] = [taskName, taskDuration];
     } else {
       scheduleCopy[date] = {};
       scheduleCopy[date][hour] = [taskName, taskDuration];
     }
-    console.log(scheduleCopy);
     setSchedule(scheduleCopy);
 
     tasksCopy[taskName].schedule = newSchedule.schedule;

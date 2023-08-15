@@ -1,23 +1,26 @@
 import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
+import { calculateTimeAfter } from "./Helpers/calculateElapsedTime";
 import { ITaskSchedule, TaskContext } from "../../../Store/Tasks/TaskContext";
 import TaskBlock from "./TaskBlock";
+import { validatePlacementTime } from "./Helpers/validatePlacementTime";
 
 interface IHourBlockProps {
   time: string;
   scheduledStatus: string;
+  date: string;
 }
 
-const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
+const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
   const taskCTX = useContext(TaskContext);
   let taskName = "";
 
   const dragEnterHandler = (event: React.DragEvent) => {
     event.preventDefault();
-    console.log("Drag Entered! - " + time + ": " + taskCTX.dragging);
-    //Dont allow dropping on scheduled item
+
     //TODO figure out how to update the drag and drop cursor to represent when you cannot drop
+    //Dont allow dropping on scheduled item
     if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
       event.dataTransfer.dropEffect = "none";
     } else {
@@ -25,13 +28,9 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
     }
   };
 
-  const dragLeaveHandler = () => {
-    console.log("Drag Left!");
-  };
-
   const dropHandler = (event: React.DragEvent) => {
     event.preventDefault();
-    let delPrev = false;
+    let delPrev = false; //lets us know if the task is already scheduled and will delete the previous instance of it being scheduled on reschedule
     const dataTransfer = event.dataTransfer.getData("txt/plain");
     if (dataTransfer !== "") {
       delPrev = true;
@@ -41,8 +40,8 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
     if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
       return;
     }
-    console.log("Dropped!");
 
+    //defining information of task to schedule and updating the task scheduled status
     const currDragItem: string =
       typeof taskCTX.dragging === "string" ? taskCTX.dragging : "Error";
     const thisTask = taskCTX.tasks[currDragItem];
@@ -53,14 +52,29 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
       schedule: {
         isScheduled: true,
         time: time,
-        date: "08/04/2023",
+        date: date,
         taskLengthInHours: scheduleInfo.taskLengthInHours,
       },
     };
 
+    //additional checks for valid drop placement
+    const endTime = calculateTimeAfter(
+      newSchedule.schedule.time,
+      newSchedule.schedule.taskLengthInHours
+    );
+    const validDropTarget: boolean = validatePlacementTime(
+      taskCTX.schedule[date],
+      newSchedule.schedule.time,
+      endTime,
+      taskName
+    );
+    if (!validDropTarget) {
+      return;
+    }
+
+    //handling drop events for either adding new task or rescheduling existing task(delPrev = true)
     if (delPrev === true) {
       const delTask = dataTransfer.split("-") as [date: string, time: string];
-      console.log(delTask);
       if (delTask.length === 2) {
         taskCTX.actions.addTaskToSchedule(taskName, newSchedule, delTask);
       }
@@ -80,7 +94,6 @@ const HourBlock = ({ time, scheduledStatus }: IHourBlockProps) => {
             : "red",
       }}
       onDragEnter={dragEnterHandler}
-      onDragLeave={dragLeaveHandler}
       onDragOver={(event: React.DragEvent) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "move";

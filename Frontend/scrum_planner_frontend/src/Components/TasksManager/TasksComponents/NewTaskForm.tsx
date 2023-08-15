@@ -1,9 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import {
-  ITask,
-  ITaskSchedule,
-  TaskContext,
-} from "../../../Store/Tasks/TaskContext";
+import { ITaskSchedule, TaskContext } from "../../../Store/Tasks/TaskContext";
 
 interface INewTaskFormProps {
   toggleMakingTask: () => void;
@@ -26,8 +22,8 @@ const NewTaskForm = ({ toggleMakingTask }: INewTaskFormProps) => {
     const newTaskSchedule: ITaskSchedule = {
       schedule: {
         isScheduled: false,
-        date: "placeholder@newform.tsx FIX ME",
-        time: "placeholder@newform.tsx FIX ME",
+        date: "N/A",
+        time: "N/A",
         taskLengthInHours: duration,
       },
     };
