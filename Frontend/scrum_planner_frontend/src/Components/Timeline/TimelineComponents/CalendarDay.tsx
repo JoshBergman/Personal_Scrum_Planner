@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import styles from "./CalendarDay.module.css";
 import { TaskContext } from "../../../Store/Tasks/TaskContext";
-import { hours } from "./Helpers/Hours";
+import { hours } from "./Helpers/ValidateScheduleHelpers/Hours";
 
 import HourBlock from "./HourBlock";
 
@@ -12,7 +12,7 @@ interface ICalendarDayProps {
 
 const CalendarDay = ({ date }: ICalendarDayProps) => {
   const tasksCTX = useContext(TaskContext);
-  const todaysTasks = tasksCTX.schedule[date];
+  const todaysTasks = { ...tasksCTX.schedule[date] };
 
   const getTimeBlocks = () => {
     const hourBlocks = []; //holds <HourBlock/> components and is returned

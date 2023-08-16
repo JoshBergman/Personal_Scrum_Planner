@@ -18,7 +18,8 @@ const TaskBlock = ({
 
   const onDragStartHandler = (event: React.DragEvent) => {
     const getThisTaskName = () => {
-      const taskName = taskCTX.schedule[taskDate][taskTimeStart][0];
+      const taskSchedule = { ...taskCTX.schedule[taskDate] };
+      const taskName = taskSchedule[taskTimeStart][0];
       return taskName;
     };
     event.dataTransfer.setData("txt/plain", taskDate + "-" + taskTimeStart);

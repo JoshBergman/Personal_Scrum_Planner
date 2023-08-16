@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
 import styles from "./HourBlock.module.css";
-import { calculateTimeAfter } from "./Helpers/calculateElapsedTime";
+import { calculateTimeAfter } from "./Helpers/ValidateScheduleHelpers/calculateElapsedTime";
 import { ITaskSchedule, TaskContext } from "../../../Store/Tasks/TaskContext";
 import TaskBlock from "./TaskBlock";
-import { validatePlacementTime } from "./Helpers/validatePlacementTime";
+import { validatePlacementTime } from "./Helpers/ValidateScheduleHelpers/validatePlacementTime";
 
 interface IHourBlockProps {
   time: string;
@@ -62,8 +62,9 @@ const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
       newSchedule.schedule.time,
       newSchedule.schedule.taskLengthInHours
     );
+    const daysSchedule = { ...taskCTX.schedule[date] };
     const validDropTarget: boolean = validatePlacementTime(
-      taskCTX.schedule[date],
+      daysSchedule,
       newSchedule.schedule.time,
       endTime,
       taskName
@@ -103,7 +104,7 @@ const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
     >
       {scheduledStatus.includes("head") && (
         <TaskBlock
-          taskDate={"08/04/2023"}
+          taskDate={date}
           taskTimeStart={time}
           durationInHours={scheduledStatus.slice(5)}
         />

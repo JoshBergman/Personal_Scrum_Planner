@@ -1,10 +1,14 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import styles from "./Calendar.module.css";
+import { formatDate } from "./TimelineComponents/Helpers/DateManageHelpers/formatDate";
 
 import CalendarDay from "./TimelineComponents/CalendarDay";
 
 const Calendars = () => {
+  const todaysDateAsDDMMYYYY = formatDate(new Date());
+  const [date1, setDate1] = useState(todaysDateAsDDMMYYYY);
+
   //everything below this is to set the pre-scrolled distance for the calendar
   // (Ideally showing 7 am as the start of the day, but allowing the user to scroll up for ealier times)
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,7 +29,7 @@ const Calendars = () => {
 
   return (
     <section ref={containerRef} className={styles.calendarContainer}>
-      <CalendarDay date={"08/04/2023"} />
+      <CalendarDay date={date1} />
     </section>
   );
 };
