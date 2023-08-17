@@ -5,14 +5,21 @@ import { calculateTimeAfter } from "./Helpers/ValidateScheduleHelpers/calculateE
 import { ITaskSchedule, TaskContext } from "../../../Store/Tasks/TaskContext";
 import TaskBlock from "./TaskBlock";
 import { validatePlacementTime } from "./Helpers/ValidateScheduleHelpers/validatePlacementTime";
+import TimeKey from "./TimeKey";
 
 interface IHourBlockProps {
   time: string;
   scheduledStatus: string;
   date: string;
+  showTimeKey?: boolean;
 }
 
-const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
+const HourBlock = ({
+  time,
+  scheduledStatus,
+  date,
+  showTimeKey,
+}: IHourBlockProps) => {
   const taskCTX = useContext(TaskContext);
   let taskName = "";
 
@@ -86,13 +93,9 @@ const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
 
   return (
     <div
+      draggable={false}
       style={{
-        backgroundColor:
-          scheduledStatus === "free"
-            ? "transparent"
-            : scheduledStatus === "scheduled"
-            ? "cyan"
-            : "red",
+        backgroundColor: scheduledStatus !== "free" ? "cyan" : "transparent",
       }}
       onDragEnter={dragEnterHandler}
       onDragOver={(event: React.DragEvent) => {
@@ -102,6 +105,7 @@ const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
       onDrop={dropHandler}
       className={styles.hourBlock}
     >
+      {showTimeKey && <TimeKey time={time} />}
       {scheduledStatus.includes("head") && (
         <TaskBlock
           taskDate={date}
@@ -109,7 +113,6 @@ const HourBlock = ({ time, scheduledStatus, date }: IHourBlockProps) => {
           durationInHours={scheduledStatus.slice(5)}
         />
       )}
-      {time}
     </div>
   );
 };

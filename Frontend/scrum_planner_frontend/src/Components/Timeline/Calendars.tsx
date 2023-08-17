@@ -11,7 +11,7 @@ const Calendars = () => {
   const [date1, setDate1] = useState(todaysDateAsDDMMYYYY);
   const [date2, setDate2] = useState(addDaysToDate(todaysDateAsDDMMYYYY, 1));
   const [date3, setDate3] = useState(addDaysToDate(todaysDateAsDDMMYYYY, 2));
-  console.log(date1, date2, date3);
+  const [date4, setDate4] = useState(addDaysToDate(todaysDateAsDDMMYYYY, 3));
 
   //everything below this is to set the pre-scrolled distance for the calendar
   // (Ideally showing 7 am as the start of the day, but allowing the user to scroll up for ealier times)
@@ -32,10 +32,15 @@ const Calendars = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className={styles.calendarContainer}>
-      <CalendarDay date={date1} />
+    <section
+      ref={containerRef}
+      className={styles.calendarContainer}
+      draggable={false}
+    >
+      <CalendarDay date={date1} showTimeKey={true} />
       <CalendarDay date={date2} />
       <CalendarDay date={date3} />
+      <CalendarDay date={date4} />
     </section>
   );
 };

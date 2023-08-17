@@ -16,23 +16,26 @@ const TaskBlock = ({
 }: ITaskBlocksProps) => {
   const taskCTX = useContext(TaskContext);
 
+  const getThisTaskName = () => {
+    const taskSchedule = { ...taskCTX.schedule[taskDate] };
+    const taskName = taskSchedule[taskTimeStart][0];
+    return taskName;
+  };
+
   const onDragStartHandler = (event: React.DragEvent) => {
-    const getThisTaskName = () => {
-      const taskSchedule = { ...taskCTX.schedule[taskDate] };
-      const taskName = taskSchedule[taskTimeStart][0];
-      return taskName;
-    };
     event.dataTransfer.setData("txt/plain", taskDate + "-" + taskTimeStart);
     taskCTX.actions.updateDragging(getThisTaskName());
   };
 
   return (
     <div
-      style={{ height: parseInt(durationInHours) * 36 + "px" }}
+      style={{ height: parseInt(durationInHours) * 45 + "px" }}
       className={styles.taskBlock}
       onDragStart={onDragStartHandler}
       draggable
-    />
+    >
+      {getThisTaskName()}
+    </div>
   );
 };
 

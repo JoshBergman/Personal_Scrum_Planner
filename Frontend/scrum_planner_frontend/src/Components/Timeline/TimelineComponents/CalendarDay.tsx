@@ -8,9 +8,10 @@ import HourBlock from "./HourBlock";
 
 interface ICalendarDayProps {
   date: string;
+  showTimeKey?: boolean;
 }
 
-const CalendarDay = ({ date }: ICalendarDayProps) => {
+const CalendarDay = ({ date, showTimeKey }: ICalendarDayProps) => {
   const tasksCTX = useContext(TaskContext);
   const todaysTasks = { ...tasksCTX.schedule[date] };
 
@@ -46,6 +47,7 @@ const CalendarDay = ({ date }: ICalendarDayProps) => {
           time={thisHour}
           date={date}
           key={"halfHourBlock-" + i}
+          showTimeKey={showTimeKey}
         />
       );
 

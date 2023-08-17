@@ -1,4 +1,9 @@
 .hourBlock {
   scroll-snap-align: center;
-  z-index: 2;
+  z-index: 1;
+  border: 1px solid gray;
+  padding: 10px 5vw;
+  height: 30px;
+  width: 59px;
+  user-select: none;
 }
