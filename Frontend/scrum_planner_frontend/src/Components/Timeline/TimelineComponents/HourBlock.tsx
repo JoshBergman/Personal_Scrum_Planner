@@ -105,7 +105,7 @@ const HourBlock = ({
       onDrop={dropHandler}
       className={styles.hourBlock}
     >
-      {showTimeKey && <TimeKey time={time} />}
+      {<TimeKey time={time} show={showTimeKey || false} />}
       {scheduledStatus.includes("head") && (
         <TaskBlock
           taskDate={date}
