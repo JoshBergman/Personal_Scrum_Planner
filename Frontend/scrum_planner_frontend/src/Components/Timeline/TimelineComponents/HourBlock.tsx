@@ -11,6 +11,7 @@ interface IHourBlockProps {
   time: string;
   scheduledStatus: string;
   date: string;
+  followingScheduled?: string;
   showTimeKey?: boolean;
 }
 
@@ -19,6 +20,7 @@ const HourBlock = ({
   scheduledStatus,
   date,
   showTimeKey,
+  followingScheduled,
 }: IHourBlockProps) => {
   const taskCTX = useContext(TaskContext);
   let taskName = "";
@@ -28,6 +30,7 @@ const HourBlock = ({
 
     //TODO figure out how to update the drag and drop cursor to represent when you cannot drop
     //Dont allow dropping on scheduled item
+    //this code doesnt work for some reason....
     if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
       event.dataTransfer.dropEffect = "none";
     } else {
@@ -44,7 +47,7 @@ const HourBlock = ({
     }
 
     //Dont allow dropping on scheduled item
-    if (scheduledStatus !== "free" && scheduledStatus !== "scheduled") {
+    if (scheduledStatus.includes("head")) {
       return;
     }
 
@@ -107,10 +110,13 @@ const HourBlock = ({
     >
       {<TimeKey time={time} show={showTimeKey || false} />}
       {scheduledStatus.includes("head") && (
+        <TaskBlock taskDate={date} taskTimeStart={time} head={true} />
+      )}
+      {scheduledStatus.includes("scheduled") && (
         <TaskBlock
           taskDate={date}
-          taskTimeStart={time}
-          durationInHours={scheduledStatus.slice(5)}
+          taskTimeStart={followingScheduled + ""}
+          head={false}
         />
       )}
     </div>

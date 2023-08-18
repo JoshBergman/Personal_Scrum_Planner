@@ -6,19 +6,15 @@ import { TaskContext } from "../../../Store/Tasks/TaskContext";
 interface ITaskBlocksProps {
   taskDate: string;
   taskTimeStart: string;
-  durationInHours: string;
+  head: boolean;
 }
 
-const TaskBlock = ({
-  taskDate,
-  taskTimeStart,
-  durationInHours,
-}: ITaskBlocksProps) => {
+const TaskBlock = ({ taskDate, taskTimeStart, head }: ITaskBlocksProps) => {
   const taskCTX = useContext(TaskContext);
 
   const getThisTaskName = () => {
     const taskSchedule = { ...taskCTX.schedule[taskDate] };
-    const taskName = taskSchedule[taskTimeStart][0];
+    const taskName = { ...taskSchedule[taskTimeStart] }[0];
     return taskName;
   };
 
@@ -29,12 +25,12 @@ const TaskBlock = ({
 
   return (
     <div
-      style={{ height: parseInt(durationInHours) * 45 + "px" }}
       className={styles.taskBlock}
       onDragStart={onDragStartHandler}
       draggable
     >
-      {getThisTaskName()}
+      {head && getThisTaskName()}
+      20
     </div>
   );
 };

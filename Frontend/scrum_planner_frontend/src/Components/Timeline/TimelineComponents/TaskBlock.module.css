@@ -2,7 +2,9 @@
   position: relative;
 
   background-color: rgb(114, 255, 86);
-  width: 253px;
+  padding: 10px 5vw;
+  height: 30px;
+  width: 59px;
   z-index: 999;
-  transform: translate(-98px, -10px);
+  transform: translate(-62px, -31px);
 }

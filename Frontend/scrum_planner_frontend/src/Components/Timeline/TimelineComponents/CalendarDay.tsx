@@ -18,6 +18,7 @@ const CalendarDay = ({ date, showTimeKey }: ICalendarDayProps) => {
   const getTimeBlocks = () => {
     const hourBlocks = []; //holds <HourBlock/> components and is returned
     let scheduledCounter = 0;
+    let currentScheduleItemTime = "";
 
     //generates each hour of the day (as <HourBlock/> component) and populates with tasks accordingly
     for (let i = 0; i < hours.length; i++) {
@@ -34,9 +35,10 @@ const CalendarDay = ({ date, showTimeKey }: ICalendarDayProps) => {
           console.error("Overscheduled"); //Theoretically should be impossible to get this
         }
         scheduledCounter = taskThisHourLengthInHours;
+        currentScheduleItemTime = thisHour;
       }
 
-      //mark following hours as scheduled
+      //mark following hours as scheduled with taskName
       if (scheduledCounter > 0 && scheduleStatus === "free") {
         scheduleStatus = "scheduled";
       }
@@ -47,6 +49,7 @@ const CalendarDay = ({ date, showTimeKey }: ICalendarDayProps) => {
           time={thisHour}
           date={date}
           key={"halfHourBlock-" + i}
+          followingScheduled={currentScheduleItemTime}
           showTimeKey={showTimeKey}
         />
       );
