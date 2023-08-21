@@ -1,9 +1,25 @@
-.hourBlock {
+.hourBlock,
+.taskBlock {
   scroll-snap-align: center;
   z-index: 1;
-  border: 1px solid gray;
   padding: 10px 5vw;
   height: 30px;
   width: 59px;
+}
+
+.hourBlock {
   user-select: none;
+  border: 1px solid gray;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.taskBlock {
+  background-color: rgb(114, 255, 86);
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  margin: 0;
 }

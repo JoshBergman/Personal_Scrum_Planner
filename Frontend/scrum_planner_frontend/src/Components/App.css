@@ -1,11 +1,10 @@
 .App {
   height: fit-content;
   min-height: 100vh;
-  background-color: rgb(236, 243, 255);
 }
 
 .pageGrid {
   display: grid;
-  grid-template-columns: 3fr 6fr;
+  grid-template-columns: 2fr 6fr;
   grid-template-rows: 100%;
 }

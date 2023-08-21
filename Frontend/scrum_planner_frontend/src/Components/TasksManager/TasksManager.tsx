@@ -26,6 +26,7 @@ const TasksManager = () => {
       onDragEnter={dragEnterHandler}
       onDragLeave={dragLeaveHandler}
     >
+      <h2>Task Backlog</h2>
       <TasksDisplay />
       <AddTask />
     </section>

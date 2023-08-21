@@ -5,6 +5,7 @@ import { TaskContext } from "../../../Store/Tasks/TaskContext";
 import { hours } from "./Helpers/ValidateScheduleHelpers/Hours";
 
 import HourBlock from "./HourBlock";
+import CalednarDayDateKey from "./CalendarDayDateKey";
 
 interface ICalendarDayProps {
   date: string;
@@ -62,7 +63,12 @@ const CalendarDay = ({ date, showTimeKey }: ICalendarDayProps) => {
     return hourBlocks;
   };
 
-  return <div className={styles.gridContainer}>{getTimeBlocks()}</div>;
+  return (
+    <div className={styles.gridContainer}>
+      <CalednarDayDateKey displayDate={date} />
+      {getTimeBlocks()}
+    </div>
+  );
 };
 
 export default CalendarDay;

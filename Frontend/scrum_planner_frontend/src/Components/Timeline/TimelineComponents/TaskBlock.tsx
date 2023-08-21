@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import styles from "./TaskBlock.module.css";
+import styles from "./HourBlock.module.css";
 import { TaskContext } from "../../../Store/Tasks/TaskContext";
 
 interface ITaskBlocksProps {

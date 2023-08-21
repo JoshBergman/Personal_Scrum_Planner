@@ -1,0 +1,9 @@
+.dateKeyDiv {
+  position: fixed;
+  transform: translateY(-20px);
+  background-color: white;
+  z-index: 100;
+  width: fit-content;
+  margin-left: 5px;
+  font-size: 1.25em;
+}
