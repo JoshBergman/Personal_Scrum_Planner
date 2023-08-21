@@ -29,8 +29,7 @@ const TaskBlock = ({ taskDate, taskTimeStart, head }: ITaskBlocksProps) => {
       onDragStart={onDragStartHandler}
       draggable
     >
-      {head && getThisTaskName()}
-      20
+      {head && <h5 className={styles.taskLabel}>{getThisTaskName()}</h5>}
     </div>
   );
 };
