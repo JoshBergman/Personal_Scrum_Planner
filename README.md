@@ -1,5 +1,11 @@
 # My Scrum Planner
 
+
+# Created during Hackathon: DonTheDeveloper Hackathon - 7/31/23
+> Project DNF
+
+I have no plans to complete this project, after creating the MVP I realized this idea, honestly kinda sucks in execution. Lol. Please check out some of my other projects!
+
 (Name subject to change..)
 
 #### By Joshua Bergman
@@ -14,4 +20,3 @@ To solve this issue My Scrum Planner encorpates the use of Scrum methodology to 
 
 `React.js` `Typescript`
 
-- Created during Hackathon: DonTheDeveloper Hackathon - 7/31/23
